@@ -1,5 +1,5 @@
-#Plot1.R & Plot1.png
-      ##Plot1.R
+#Plot1.R 
+
   install.packages("data.table")
   library(data.table)
   url <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
