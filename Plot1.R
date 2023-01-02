@@ -1,34 +1,19 @@
 #Plot1.R 
-
   install.packages("data.table")
   library(data.table)
   url <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
   download.file(url, file.path("dataFiles.zip"))
   unzip(zipfile = "dataFiles.zip")
   
-  #Your choosing to the name (option)
-    consumption <- unzip
-  
-  #Changing the txt.file into an Data Table 
-    consumption <- data.table::fread(input = "household_power_consumption.txt", na.strings = "?")
-  
-  #Reorganizing the data using the 9 formats suggested that we use: 
-  #Date(dd/mm/yyyy)
-    consumption$Date <- as.Date(consumption$Date, format = "%d/5m/%Y")
-  #Time(hh:mm:ss)
-    consumption$Time <- format(consumption$Time, format="%H:%M:%S")
-  #household global active power (in kilowats)
-    consumption$Global_active_power <- as.numeric(consumption$Global_active_power)
-  #household global reactive power (in kilowats)
-    consumption$Global_reactive_power <- as.numeric(consumption$Global_reactive_power)
-  #Voltage
-    consumption$Voltage <- as.numeric(consumption$Voltage)
-  #house global current intensity 
-    consumption$Global_intensity <- as.numeric(consumption$Global_intensity)
-  ##For the Sub_metering_1 - 3 use the up arrow key to copy the previous code and ONLY change the number since its repeated
-  #sub_metering_1
-    consumption$Sub_metering_1 <- as.numeric(consumption$Sub_metering_1)
-  #sub_metering_2
-    consumption$Sub_metering_2 <- as.numeric(consumption$Sub_metering_2)
-  #sub_metering_3
-    consumption$Sub_metering_3 <- as.numeric(consumption$Sub_metering_3)
+  dataFile <- "./data/household_power_consumption.txt")
+  data <- data.table::fread(input = "household_power_consumption.txt", na.strings = "?")
+  data[, Global_active_power := lapply(.SD, as.numeric), .SDcols = c("Global_active_power")]
+
+#Filter Dates for 1/2/2007 - 2/2/2007
+  consumption <- data[data$Date %n% c("1/2/2007","2/2/2007"),]
+
+#Plot1
+  png("Plot1.png", width=480, height=480)
+  hist(consumption[, Global_active_power], main="Global Active Power", xlab="Global Active Power (kilowatts)", ylab="Frequency", col="Red")
+
+dev.off()
