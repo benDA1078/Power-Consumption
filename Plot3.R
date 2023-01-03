@@ -23,4 +23,12 @@
   lines(consumption$dateTime, Meter2, col="red")
   lines(consumption$dateTime, Meter3, col="blue")
   legend("topright", c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), lty=c(1,1), lwd=1, col=c("black", "red", "blue"))
-  dev.off()
+  
+#Plot3.png
+	##Figured out the issue with the old code. This code is functional in RStudio
+	##Updated (1-3-2023)
+		plot(consumption$dateTime, Meter1, type='l',xlab="",ylab="Energy Submetering")
+		lines(consumption$dateTime, Meter2, type='l', col="red")
+		lines(consumption$dateTime, Meter3, type='l', col="blue")
+		legend("topright", c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), lty=1, lwd=2.5, col=c("black", "red", "blue"))
+dev.off()
